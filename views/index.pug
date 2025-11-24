@@ -21,3 +21,26 @@ block content
     label(for='task') Task:
     input(type='text', name='task', id='task', required)
     button(type='submit') Create Task
+
+each val in todos
+  li
+    form(method='POST' action='/complete' style='display:inline')
+      input(type='hidden', name='id', value=val.id)
+      button(type='submit')
+        if val.completed > 0
+          | ✓ Completed
+        else
+          | Mark Complete
+
+    |    #{val.task}
+
+    // Edit form
+    form(method='POST' action='/edit' style='display:inline')
+      input(type='hidden', name='id', value=val.id)
+      input(type='text', name='task', value=val.task required)
+      button(type='submit') Save
+
+    // Delete form
+    form(method='POST' action='/delete' style='display:inline')
+      input(type='hidden', name='id', value=val.id)
+      button(type='submit') Delete
